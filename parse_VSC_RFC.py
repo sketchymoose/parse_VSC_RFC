@@ -1,8 +1,9 @@
-# Parse_VSS_RFC.py by sk3tchymoos3
+# Parse_VSC_RFC.py by sk3tchymoos3
 # This script will automatically mount an E01 single 
-# disk image, mount the VSS found on disk and run 
+# disk image, mount the VSC found on disk and run 
 # rfc by Harlan Carvey against all of them. 
 # You can always add other commands if you so desire!
+# usage: python parse_VSC_RFC.py <pathTofile.e01>
 
 import os
 import re
