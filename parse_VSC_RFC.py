@@ -14,11 +14,15 @@ tempFile="/tmp/info"
 
 #check for the E01 file
 if len(sys.argv) == 1:
-	print "Please prvide the E01 image to mount!"
+	print "Please provide the E01 image to mount!"
 	sys.exit()
 else:
 	imageFile=sys.argv[1]
-	print "Using the E01 file %s" % imageFile
+    	if os.path.exists(imageFile):
+       		print "Using the E01 file %s" % imageFile
+    	else:
+        	print "Image location is invalid, please double check your path"
+        	sys.exit()
 
 #first we need to mount the E01
 os.system("sudo ewfmount %s /mnt/ewf >/dev/null 2>&1" % imageFile)
@@ -32,6 +36,7 @@ for line in file:
 			if s.isdigit():
 				number=int(s)
 				print "We have %d VSS" % number
+file.close()
 
 #w00t, lets mount these bad boys
 print "Running vshadowmount..."
@@ -55,12 +60,13 @@ for x in range (1,number+1):
 
 #cleanup!
 print "Cleaning up the mounted VSS files and temporary files..."
+os.chdir("/mnt")
 for x in range (1,number+1):
 	try:	
 		os.system("umount /mnt/shadow_mount/vss%d >> /tmp/trash" % x)
 	except:
 		pass
-#os.system("umount /mnt/vss")
-#os.system("umount /mnt/ewf")
+os.system("umount /mnt/vss")
+os.system("umount /mnt/ewf")
 os.system("rm -rf %s" % tempFile)
-print "Thank you and have a good day :D Don't forget to unmount vss & ewf"
+print "Thank you and have a good day :D"
